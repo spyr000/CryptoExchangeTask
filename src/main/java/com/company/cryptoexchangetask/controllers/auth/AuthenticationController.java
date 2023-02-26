@@ -25,8 +25,6 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    @RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
     public ResponseEntity<AuthenticationResponse> authenticateRequest(
             @RequestBody AuthenticationRequest request
     ) {

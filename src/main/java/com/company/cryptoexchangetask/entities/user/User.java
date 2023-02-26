@@ -43,11 +43,11 @@ public class User implements Serializable, UserDetails {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "user_name", unique = true)
+    @Column(name = "user_name")
     @NotEmpty(message = "Name can not be empty")
     private String username;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     @NotEmpty(message = "Email can not be empty")
     @Email(message = "Email is not valid")
     private String email;

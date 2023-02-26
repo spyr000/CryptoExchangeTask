@@ -1,14 +1,20 @@
 package com.company.cryptoexchangetask.requests;
 
 public class AuthenticationRequest {
-    private String email;
-
-    public String getEmail() {
-        return email;
+    public AuthenticationRequest(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public AuthenticationRequest() {}
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -20,11 +26,4 @@ public class AuthenticationRequest {
     }
 
     private String password;
-
-    public AuthenticationRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public AuthenticationRequest() {}
 }

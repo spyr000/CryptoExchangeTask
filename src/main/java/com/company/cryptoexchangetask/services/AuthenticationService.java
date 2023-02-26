@@ -43,12 +43,12 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
 
-        User user = userRepo.findByEmail(request.getEmail())
+        User user = userRepo.findByEmail(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         String token = jwtService.generateToken(user);
         return new AuthenticationResponse(token);
@@ -57,12 +57,12 @@ public class AuthenticationService {
     public AuthenticationResponse authorize(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
 
-        User user = userRepo.findByEmail(request.getEmail())
+        User user = userRepo.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         String token = jwtService.generateToken(user);
         return new AuthenticationResponse(token);
