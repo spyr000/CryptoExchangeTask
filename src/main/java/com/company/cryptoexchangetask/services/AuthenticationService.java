@@ -52,23 +52,6 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        LoggerFactory.getLogger(AuthenticationService.class).info(request.getUsername() + " " + request.getPassword());
-
-        User user = userRepo.findByEmail(request.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        String token = jwtService.generateToken(user);
-        return new AuthenticationResponse(token);
-    }
-
-    public AuthenticationResponse authorize(AuthenticationRequest request) {
-        LoggerFactory.getLogger(AuthenticationManager.class).info(request.getUsername() + " " + request.getPassword());
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
-
 
         User user = userRepo.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

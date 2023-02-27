@@ -29,7 +29,7 @@ public class DemoController {
 
     @GetMapping
     public ResponseEntity<String> sayHello() {
-        User user = userRepo.findByUsername("noob").orElseThrow();
+        User user = userRepo.findByUsername("noobikkk").orElseThrow();
         String secretKey;
         try {
             secretKey = aesEncrypter.generateSecretKeyForUser(user);

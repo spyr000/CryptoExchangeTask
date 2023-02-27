@@ -3,6 +3,8 @@ package com.company.cryptoexchangetask.entities.user;
 import io.jsonwebtoken.io.Encoders;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+@Data
+@RequiredArgsConstructor
 @Entity
 @Table(name = "users", schema = "public", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_name", "email"})})
 public class User implements Serializable, UserDetails {
@@ -35,19 +40,16 @@ public class User implements Serializable, UserDetails {
 //                +
     }
 
-    public User() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     @NotEmpty(message = "Name can not be empty")
     private String username;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotEmpty(message = "Email can not be empty")
     @Email(message = "Email is not valid")
     private String email;
@@ -120,7 +122,7 @@ public class User implements Serializable, UserDetails {
                     objectInput.close();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(User.class.getName()).log(Level.WARNING,ex.getMessage(),ex);
+                Logger.getLogger(User.class.getName()).log(Level.WARNING, ex.getMessage(), ex);
             }
         }
         return user;
