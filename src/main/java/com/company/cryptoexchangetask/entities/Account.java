@@ -2,67 +2,40 @@ package com.company.cryptoexchangetask.entities;
 
 import com.company.cryptoexchangetask.entities.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "accounts", schema = "public")
 public class Account implements Serializable {
+    @Builder
     public Account(User user, double moneyAmt, Currency currency) {
         this.user = user;
         this.moneyAmt = moneyAmt;
         this.currency = currency;
     }
 
-    public Account() {
-    }
-
     @ManyToOne()
-    @JoinColumn(name = "user_id")
-    @NotEmpty(message = "Account must have an owner user")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "account_id", nullable = false)
     private Long id;
 
     @Column(name = "money_amount")
     private double moneyAmt;
 
     @OneToOne
-    @JoinColumn(name = "currency_id")
-    @NotEmpty(message = "Account must have a currency")
+    @JoinColumn(name = "currency_id", nullable = false)
     private Currency currency;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public double getMoneyAmt() {
-        return moneyAmt;
-    }
-
-    public void setMoneyAmt(double moneyAmt) {
-        this.moneyAmt = moneyAmt;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

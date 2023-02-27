@@ -8,6 +8,7 @@ class CryptoExchangeTaskApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

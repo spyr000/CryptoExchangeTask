@@ -12,16 +12,18 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "currencies", schema = "public")
 public class Currency implements Serializable {
+    public Currency(String currencyName) {
+        this.currencyName = currencyName;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "currency_id")
+    @Column(name = "currency_id", nullable = false)
     private Long id;
 
     @NotEmpty(message = "Currency name can not be empty")
-    @Column(name = "currency_name")
+    @Column(name = "currency_name", unique = true)
     private String currencyName;
 }

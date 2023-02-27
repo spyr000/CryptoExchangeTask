@@ -6,8 +6,8 @@ import com.company.cryptoexchangetask.repos.UserRepo;
 import com.company.cryptoexchangetask.security.dto.AuthenticationRequest;
 import com.company.cryptoexchangetask.security.dto.RegisterRequest;
 import com.company.cryptoexchangetask.security.dto.AuthenticationResponse;
+import com.company.cryptoexchangetask.security.dto.RegistrationResponse;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +25,7 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public RegistrationResponse register(RegisterRequest request) {
         User user = new User(
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
@@ -33,8 +33,8 @@ public class AuthenticationService {
                 Role.USER
         );
         userRepo.save(user);
-        String token = jwtService.generateToken(UserDetailsImpl.fromUser(user));
-        return new AuthenticationResponse(token);
+
+        return new RegistrationResponse(user.getSecretKey());
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

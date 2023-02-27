@@ -1,25 +1,14 @@
 package com.company.cryptoexchangetask.controllers;
 
-import com.company.cryptoexchangetask.entities.user.User;
 import com.company.cryptoexchangetask.repos.UserRepo;
-import com.company.cryptoexchangetask.utils.AesEncrypter;
-import com.company.cryptoexchangetask.utils.HexConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/demo-controller")
 public class DemoController {
-
-    @Autowired
-    private AesEncrypter aesEncrypter;
 
     private final UserRepo userRepo;
 
@@ -29,15 +18,14 @@ public class DemoController {
 
     @GetMapping
     public ResponseEntity<String> sayHello() {
-        User user = userRepo.findByUsername("noobikkk").orElseThrow();
-        String secretKey;
-        try {
-            secretKey = aesEncrypter.generateSecretKeyForUser(user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        user = aesEncrypter.recoverUserFromSecretKey(secretKey);
 
-        return ResponseEntity.ok(user.getUsername() + " " + user.getEmail() + " " + user.getPassword());
+        List<String> uuidList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            UUID u = UUID.randomUUID();
+            uuidList.add(u.toString());
+        }
+
+
+        return ResponseEntity.ok(uuidList.toString());
     }
 }
