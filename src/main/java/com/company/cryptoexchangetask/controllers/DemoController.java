@@ -1,4 +1,4 @@
-package com.company.cryptoexchangetask.controllers.auth;
+package com.company.cryptoexchangetask.controllers;
 
 import com.company.cryptoexchangetask.entities.user.User;
 import com.company.cryptoexchangetask.repos.UserRepo;

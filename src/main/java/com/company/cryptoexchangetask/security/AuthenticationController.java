@@ -1,23 +1,18 @@
-package com.company.cryptoexchangetask.controllers.auth;
+package com.company.cryptoexchangetask.security;
 
-import com.company.cryptoexchangetask.requests.AuthenticationRequest;
-import com.company.cryptoexchangetask.requests.RegisterRequest;
-import com.company.cryptoexchangetask.responses.AuthenticationResponse;
-import com.company.cryptoexchangetask.services.AuthenticationService;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
+import com.company.cryptoexchangetask.security.dto.AuthenticationRequest;
+import com.company.cryptoexchangetask.security.dto.RegisterRequest;
+import com.company.cryptoexchangetask.security.dto.AuthenticationResponse;
+import com.company.cryptoexchangetask.security.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
-
-    public AuthenticationController(AuthenticationService service) {
-        this.service = service;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(

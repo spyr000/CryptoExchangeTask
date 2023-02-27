@@ -1,10 +1,11 @@
-package com.company.cryptoexchangetask.services;
+package com.company.cryptoexchangetask.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Setter;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,13 +22,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@Setter
 public class JwtService {
     @Autowired
     private Environment env;
-
-    public JwtService() {
-    }
-
 
     private static final int TOKEN_EXPIRATION_TIME_MILLIS = 1000 * 60 * 24;
 
