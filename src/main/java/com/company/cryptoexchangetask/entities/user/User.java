@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 @NoArgsConstructor
 @Entity
 @Table(name = "users", schema = "public")
-public class User implements Serializable, UserDetails {
+public class User implements Serializable {
 
     public User(String email,
                 String password,
@@ -65,33 +65,6 @@ public class User implements Serializable, UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

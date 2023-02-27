@@ -1,6 +1,7 @@
 package com.company.cryptoexchangetask.security;
 
 import com.company.cryptoexchangetask.entities.user.User;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserDetailsImpl implements UserDetails {
     private User user;
+
+    public static UserDetailsImpl fromUser(User user) {
+        return new UserDetailsImpl(user);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

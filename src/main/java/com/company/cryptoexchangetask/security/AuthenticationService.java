@@ -33,12 +33,11 @@ public class AuthenticationService {
                 Role.USER
         );
         userRepo.save(user);
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(UserDetailsImpl.fromUser(user));
         return new AuthenticationResponse(token);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        LoggerFactory.getLogger(AuthenticationService.class).info(request.getUsername() + " " + request.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -48,7 +47,7 @@ public class AuthenticationService {
 
         User user = userRepo.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateToken(UserDetailsImpl.fromUser(user));
         return new AuthenticationResponse(token);
     }
 }
