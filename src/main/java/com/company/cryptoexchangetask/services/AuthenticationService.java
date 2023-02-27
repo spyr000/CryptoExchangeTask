@@ -1,11 +1,14 @@
 package com.company.cryptoexchangetask.services;
 
+import com.company.cryptoexchangetask.controllers.auth.AuthenticationController;
 import com.company.cryptoexchangetask.entities.user.Role;
 import com.company.cryptoexchangetask.entities.user.User;
 import com.company.cryptoexchangetask.repos.UserRepo;
 import com.company.cryptoexchangetask.requests.AuthenticationRequest;
 import com.company.cryptoexchangetask.requests.RegisterRequest;
 import com.company.cryptoexchangetask.responses.AuthenticationResponse;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationService {
+    @Autowired
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
 
@@ -41,12 +45,14 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        LoggerFactory.getLogger(AuthenticationService.class).info(request.getUsername() + " " + request.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
+        LoggerFactory.getLogger(AuthenticationService.class).info(request.getUsername() + " " + request.getPassword());
 
         User user = userRepo.findByEmail(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -55,12 +61,14 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authorize(AuthenticationRequest request) {
+        LoggerFactory.getLogger(AuthenticationManager.class).info(request.getUsername() + " " + request.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
                 )
         );
+
 
         User user = userRepo.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

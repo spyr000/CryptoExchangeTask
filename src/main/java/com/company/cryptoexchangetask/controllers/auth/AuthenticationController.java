@@ -4,8 +4,10 @@ import com.company.cryptoexchangetask.requests.AuthenticationRequest;
 import com.company.cryptoexchangetask.requests.RegisterRequest;
 import com.company.cryptoexchangetask.responses.AuthenticationResponse;
 import com.company.cryptoexchangetask.services.AuthenticationService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,6 +30,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticateRequest(
             @RequestBody AuthenticationRequest request
     ) {
+
         return ResponseEntity.ok(service.authenticate(request));
     }
 }
