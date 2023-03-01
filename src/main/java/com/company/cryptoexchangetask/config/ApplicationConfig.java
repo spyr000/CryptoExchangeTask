@@ -1,7 +1,7 @@
 package com.company.cryptoexchangetask.config;
 
-import com.company.cryptoexchangetask.repos.UserRepo;
-import com.company.cryptoexchangetask.security.UserDetailsImpl;
+import com.company.cryptoexchangetask.repo.UserRepo;
+import com.company.cryptoexchangetask.service.security.impl.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,22 +12,19 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final UserRepo userRepo;
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> UserDetailsImpl.fromUser(userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
-    }
+    private final CustomUserDetailService userDetailService;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(userDetailService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
