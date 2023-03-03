@@ -4,6 +4,7 @@ import com.company.cryptoexchangetask.dto.security.AuthenticationRequest;
 import com.company.cryptoexchangetask.dto.security.RegisterRequest;
 import com.company.cryptoexchangetask.dto.security.AuthenticationResponse;
 import com.company.cryptoexchangetask.dto.security.RegistrationResponse;
+import com.company.cryptoexchangetask.service.security.AuthenticationService;
 import com.company.cryptoexchangetask.service.security.impl.AuthenticationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    private final AuthenticationServiceImpl service;
+    private final AuthenticationService service;
 
     @PostMapping("/register")
     public ResponseEntity<RegistrationResponse> register(
